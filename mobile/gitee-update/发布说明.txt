@@ -1,0 +1,24 @@
+码云仓库：
+https://gitee.com/dgsproject/kline
+
+仓库必须使用 master 分支，并保持以下路径：
+update/KLineMobile.apk.part001
+update/KLineMobile.apk.part002
+update/KLineMobile.apk.part003
+update/KLineMobile.apk.part004
+update/KLineMobile.apk.part005
+update/KLineMobile.apk.part006
+update/update.json
+
+首次发布：
+1. 先上传 update 目录中的全部 APK 分片。
+2. 确认所有分片上传完成后，再上传 update/update.json。
+
+以后发布新版本：
+1. 安卓安装包内部版本编号必须递增。
+2. 重新生成 APK 分片及 update.json。
+3. 始终先上传全部分片，确认上传完成后再上传 update.json。
+4. 删除新清单不再引用的旧分片，不要上传完整 APK 大文件。
+
+注意：
+签名文件和签名密码不得上传到公开仓库，否则其他人可能伪造应用更新。
