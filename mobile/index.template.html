@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#f3f6fb">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="application-name" content="K 线相似股票">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="K 线相似股票">
+  <link
+    rel="apple-touch-icon"
+    href="data:image/png;base64,__APP_ICON__"
+  >
+  <link
+    rel="icon"
+    type="image/png"
+    href="data:image/png;base64,__APP_ICON__"
+  >
+  <title>K 线相似股票</title>
+  <style>
+/*__STYLES__*/
+  </style>
+</head>
+<body>
+  <div id="loading-screen" class="loading-screen" role="status">
+    <div class="loading-card">
+      <span class="loading-spinner" aria-hidden="true"></span>
+      <strong>正在载入内置行情</strong>
+      <span id="loading-text">正在解析全市场数据，请稍候</span>
+    </div>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <header class="app-bar">
+      <div>
+        <h1>K 线相似股票</h1>
+        <p id="market-summary">行情数据准备中</p>
+      </div>
+      <div class="market-actions">
+        <span id="market-mode" class="market-badge offline">内置行情</span>
+        <button id="refresh-live" class="refresh-live" type="button">
+          更新行情
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="card query-card" aria-labelledby="query-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="query-title">加载目标股票</h2>
+            <p>输入六位 A 股代码或包含代码的中文语句</p>
+          </div>
+          <button
+            id="favorites-button"
+            class="button secondary compact-button"
+            type="button"
+          >收藏夹</button>
+        </div>
+        <form id="query-form" class="query-form">
+          <label class="sr-only" for="stock-query">股票代码</label>
+          <input
+            id="stock-query"
+            name="stock-query"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="40"
+            placeholder="例如：600519"
+          >
+          <button id="load-button" class="button primary" type="submit">
+            加载 K 线
+          </button>
+        </form>
+        <p id="query-message" class="message" aria-live="polite">
+          联网时读取公开实时行情，断网时自动使用文件内置数据。
+        </p>
+      </section>
+
+      <section id="chart-card" class="card chart-card" aria-labelledby="chart-title">
+        <div class="section-heading chart-heading">
+          <div>
+            <h2 id="chart-title">目标股票走势</h2>
+            <p id="stock-summary">请先加载股票</p>
+          </div>
+          <div class="legend" aria-label="均线图例">
+            <span class="ma5">MA5</span>
+            <span class="ma10">MA10</span>
+            <span class="ma20">MA20</span>
+            <span class="ma30">MA30</span>
+            <span class="ma60">MA60</span>
+            <span class="ma120">MA120</span>
+          </div>
+        </div>
+
+        <div class="chart-shell">
+          <canvas
+            id="main-chart"
+            class="stock-chart"
+            aria-label="K 线、成交量和 MACD 图表，可在图表上横向拖动选择片段"
+          ></canvas>
+          <div id="chart-placeholder" class="chart-placeholder">
+            加载股票后，可在图表上横向拖动选择历史片段
+          </div>
+        </div>
+
+        <div class="timeline" aria-label="时间范围控制">
+          <div class="timeline-labels">
+            <strong>显示范围</strong>
+            <span id="view-label">尚未加载</span>
+          </div>
+          <label>
+            <span>起点</span>
+            <input id="view-start" type="range" min="0" max="1" value="0" disabled>
+          </label>
+          <label>
+            <span>终点</span>
+            <input id="view-end" type="range" min="0" max="1" value="1" disabled>
+          </label>
+        </div>
+      </section>
+
+      <section class="card action-card" aria-labelledby="selection-title">
+        <div class="selection-copy">
+          <h2 id="selection-title">匹配片段</h2>
+          <p id="selection-summary">请在图表上拖动选择 15～400 根连续 K 线</p>
+        </div>
+        <div class="action-buttons">
+          <button id="reset-view" class="button secondary" type="button" disabled>
+            显示全部
+          </button>
+          <button id="zoom-selection" class="button secondary" type="button" disabled>
+            放大选区
+          </button>
+          <button id="save-favorite" class="button secondary" type="button" disabled>
+            收藏框选
+          </button>
+          <button id="search-button" class="button primary" type="button" disabled>
+            寻找相似股票
+          </button>
+        </div>
+        <div id="progress-wrap" class="progress-wrap" hidden>
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-bar"></span>
+          </div>
+          <span id="progress-label">准备匹配</span>
+        </div>
+      </section>
+
+      <section class="card result-card" aria-labelledby="result-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="result-title">相似股票</h2>
+            <p id="result-summary">完成片段选择后开始匹配</p>
+          </div>
+        </div>
+        <!-- 默认使用三项指标综合排序，用户可按需组合。 -->
+        <fieldset class="similarity-filters">
+          <legend>相似度筛选（可多选）</legend>
+          <div class="filter-options">
+            <label class="filter-checkbox">
+              <input id="filter-kline" type="checkbox" checked>
+              <span>K 线相似度</span>
+            </label>
+            <label class="filter-checkbox">
+              <input id="filter-volume" type="checkbox" checked>
+              <span>交易量相似度</span>
+            </label>
+            <label class="filter-checkbox">
+              <input id="filter-macd" type="checkbox" checked>
+              <span>MACD 相似度</span>
+            </label>
+          </div>
+          <p class="filter-hint">按所选指标的综合相似度从高到低排序</p>
+        </fieldset>
+        <div id="result-list" class="result-list">
+          <div class="empty-state">尚无匹配结果</div>
+        </div>
+      </section>
+
+      <footer>
+        本工具只读取公开行情并进行形态计算，不访问账户、持仓、委托或交易功能。
+        结果仅用于数据分析，不构成投资建议。
+      </footer>
+    </main>
+  </div>
+
+  <div id="detail-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-detail></div>
+    <section
+      class="modal-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="detail-title"
+    >
+      <header class="modal-header">
+        <div>
+          <h2 id="detail-title">股票详情</h2>
+          <p id="detail-summary"></p>
+        </div>
+        <button
+          id="detail-close"
+          class="icon-button"
+          type="button"
+          aria-label="关闭详情"
+        >×</button>
+      </header>
+      <div class="detail-chart-shell">
+        <canvas id="detail-chart" class="stock-chart detail-chart"></canvas>
+      </div>
+      <div class="timeline detail-timeline">
+        <div class="timeline-labels">
+          <strong>详情显示范围</strong>
+          <span id="detail-view-label"></span>
+        </div>
+        <label>
+          <span>起点</span>
+          <input id="detail-start" type="range" min="0" max="1" value="0">
+        </label>
+        <label>
+          <span>终点</span>
+          <input id="detail-end" type="range" min="0" max="1" value="1">
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <div id="favorites-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-favorites></div>
+    <section
+      class="modal-panel favorites-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="favorites-title"
+    >
+      <header class="modal-header">
+        <div>
+          <h2 id="favorites-title">K 线收藏夹</h2>
+          <p id="favorites-summary">尚无收藏</p>
+        </div>
+        <button
+          id="favorites-close"
+          class="icon-button"
+          type="button"
+          aria-label="关闭收藏夹"
+        >×</button>
+      </header>
+      <div class="favorites-layout">
+        <div class="favorite-list-pane">
+          <div id="favorites-list" class="favorites-list">
+            <div class="empty-state">尚无收藏</div>
+          </div>
+        </div>
+        <div class="favorite-preview-pane">
+          <p id="favorite-preview-summary" class="favorite-preview-summary">
+            选择左侧收藏以预览 K 线走势
+          </p>
+          <div class="favorite-chart-shell">
+            <canvas
+              id="favorite-preview-chart"
+              class="stock-chart favorite-preview-chart"
+              aria-label="收藏的 K 线、成交量和 MACD 预览图"
+            ></canvas>
+            <div id="favorite-preview-placeholder" class="chart-placeholder">
+              选择收藏后显示图表
+            </div>
+            </div>
+          </div>
+          <div class="favorite-actions">
+            <button
+              id="favorite-search"
+              class="button primary"
+              type="button"
+              disabled
+            >搜索相似</button>
+            <button
+              id="favorite-delete"
+              class="button danger"
+              type="button"
+              disabled
+            >删除收藏</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script id="embedded-market-data">
+window.__MOBILE_DATA__ = __MARKET_DATA__;
+  </script>
+  <script>
+/*__APP_SCRIPT__*/
+  </script>
+</body>
+</html>
