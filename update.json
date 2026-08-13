@@ -1,0 +1,74 @@
+{
+    "sha256":  "5b1cd5fd1fe06a124114368cc68f47b6001b3d22776d410396038ad35b73c4c4",
+    "version_name":  "1.2.8",
+    "notes":  "K线框选范围从60根扩大到400根；数据查询范围从2年延长到5年；修复TDX协议分页获取超过800根K线的问题。",
+    "parts":  [
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part001",
+                      "sha256":  "ba5054dd437fba74bd79ace09ee37798f7e67e1e5328679eb8850ba49f3e9de0",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part002",
+                      "sha256":  "a4797adcb2a69ebbc133e7b1f9c251772149c9efaace1ac4ecdde25f03ad9dbf",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part003",
+                      "sha256":  "fa312c7ab16e1ad94dcfc465d3a92f8f0d3c63662c923091ae1b311636dba447",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part004",
+                      "sha256":  "e9fa6644bd4deaa50d7485e37c71d23674b59ac491a3f7a361bc5cc6776edc33",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part005",
+                      "sha256":  "113edc556ce24919d6ebc88f1faa39e191f14a16a04f71cb3238165d7f5aacc5",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part006",
+                      "sha256":  "66bb78f6ec197d8e41fb5cae4eaa67b501b24e25a6a5730008f877d74487aea4",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part007",
+                      "sha256":  "0d440a39fd377402bfbbf55b1f1acd3bfd0bf6f4682c3bae41ba7520093d7d3b",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part008",
+                      "sha256":  "f3ee6cd30788ea1e104b58582bc481ad71085dae1e20b27d179a94bfeee5b8ee",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part009",
+                      "sha256":  "c35d5f376d344cd53a18ae382a3a1828b281f00d0e9247b0fc60cc20c5ddd53a",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part010",
+                      "sha256":  "3d086db847ee3135de3a5c3d8066c5dac3918488c9995ae49873b8968bc52917",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part011",
+                      "sha256":  "a19a9f59260a48fffc8bec24a47b2447dd01a733cc656a0fc35d4d894893351c",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part012",
+                      "sha256":  "4b391aa1bb6af2c427eca14d81639016d52733220aca1b201fba170b2f09f293",
+                      "size":  8388608
+                  },
+                  {
+                      "url":  "https://gitee.com/dgsproject/kline/raw/master/update/KLineMobile-1.2.8.apk.part013",
+                      "sha256":  "e79474557182e0348bf7de9076caeaeaf747d7db172dc5ac0bd293d03512f145",
+                      "size":  7086964
+                  }
+              ],
+    "version_code":  11,
+    "size":  107750260
+}
