@@ -5,6 +5,8 @@
   // 15 根日 K 保证相似片段和详情窗口不少于半个月。
   const MIN_SELECTION = 15;
   const MAX_SELECTION = 400;
+  // 初始默认显示的 K 线根数，避免一次性展示全部历史导致图表拥挤。
+  const DEFAULT_VIEW_BARS = 120;
   const INDICATOR_WARMUP = 35;
   const RESULT_COUNT = 10;
   const DEFAULT_SIMILARITY_FILTERS = ["kline", "volume", "macd"];
@@ -1510,7 +1512,7 @@
       bounds.macdTop + 3,
     );
 
-    const labelCount = width < 520 ? 3 : 5;
+    const labelCount = width < 520 ? 5 : 7;
     context.fillStyle = "#59616c";
     context.textAlign = "center";
     context.textBaseline = "bottom";
@@ -1900,15 +1902,43 @@
     window.addEventListener("mouseup", handlePointerUp);
   }
 
-  // 时间轴纵向滑动时恢复起始值，横向拖动仍保持实时更新。
+  // 时间轴纵向滑动时恢复起始值（防误触），
+  // 横向拖动后手指上抬越高，滑块移动越精细（灵敏度越低）。
   function bindScrollSafeRange(element, updateView) {
     let gesture = null;
 
     function restoreValue() {
-      if (!gesture || element.value === gesture.startValue) {
+      if (!gesture || element.value === String(gesture.startValue)) {
         return;
       }
-      element.value = gesture.startValue;
+      element.value = String(gesture.startValue);
+      updateView();
+    }
+
+    function applyPrecisionValue() {
+      if (!gesture || !gesture.precision) {
+        return;
+      }
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0) {
+        return;
+      }
+      const min = Number(element.min);
+      const max = Number(element.max);
+      const range = max - min;
+      if (range <= 0) {
+        return;
+      }
+      const ratio = Math.max(
+        0,
+        Math.min(1, (gesture.currentX - rect.left) / rect.width),
+      );
+      const nativeValue = min + ratio * range;
+      const nativeDelta = nativeValue - gesture.startValue;
+      const scaledDelta = nativeDelta * gesture.sensitivity;
+      const desiredValue = gesture.startValue + scaledDelta;
+      const clamped = Math.max(min, Math.min(max, desiredValue));
+      element.value = String(Math.round(clamped));
       updateView();
     }
 
@@ -1921,8 +1951,11 @@
       gesture = {
         startX: point.x,
         startY: point.y,
-        startValue: element.value,
+        startValue: Number(element.value),
         vertical: false,
+        precision: false,
+        sensitivity: 1,
+        currentX: point.x,
       };
     }
 
@@ -1934,9 +1967,21 @@
       if (!point) {
         return;
       }
-      if (gestureDirection(gesture, point) === "vertical") {
+      const direction = gestureDirection(gesture, point);
+      if (direction === "vertical") {
         gesture.vertical = true;
         restoreValue();
+        return;
+      }
+      if (direction === "horizontal") {
+        gesture.precision = true;
+      }
+      if (gesture.precision) {
+        gesture.currentX = point.x;
+        // 手指上抬越高（Y 值越小），灵敏度越低，横向移动幅度越小。
+        const lift = Math.max(0, gesture.startY - point.y);
+        gesture.sensitivity = 1 / (1 + lift / 50);
+        applyPrecisionValue();
       }
     }
 
@@ -1950,6 +1995,10 @@
     element.addEventListener("input", () => {
       if (gesture && gesture.vertical) {
         restoreValue();
+        return;
+      }
+      if (gesture && gesture.precision) {
+        applyPrecisionValue();
         return;
       }
       updateView();
@@ -2089,7 +2138,11 @@
       elements["result-list"],
       createEmptyState("尚无匹配结果"),
     );
-    setView(0, bars.length, true);
+    setView(
+      Math.max(0, bars.length - DEFAULT_VIEW_BARS),
+      bars.length,
+      true,
+    );
     clearSelection();
     setMessage(
       `已加载 ${stock.name}（${stock.code}.${stock.exchange}）`,
@@ -2746,7 +2799,7 @@
     state.detailStock = stock;
     state.detailBars = bars;
     state.detailIndicators = calculateIndicators(bars);
-    state.detailStart = 0;
+    state.detailStart = Math.max(0, bars.length - DEFAULT_VIEW_BARS);
     state.detailEnd = bars.length;
     elements["detail-title"].textContent = `${stock.name} ${stock.code}`;
     elements["detail-summary"].textContent = (
