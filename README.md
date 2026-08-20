@@ -1,7 +1,54 @@
 # A 股多指标片段匹配工具
 
-输入一只 A 股代码后，程序会展示最近 700 根日 K，时间跨度接近三个交易年。
-用户可以先在时间轴上选择并放大日期范围，再在主图上拖拽选择 5 至 60 根
+> **仓库架构（主次关系）**
+>
+> - **GitHub = 官方主源（代码主权）**：`DGSAMA-Diguo/KLline`（main 分支）
+>   所有 Release、代码提交、更新分片 update.json 的权威记录均在 GitHub 上。
+> - **Gitee = 国内镜像源（CDN 加速）**：`dgsproject/kline`（master / mobile / pc 三分支）
+>   为国内用户提供更快的下载入口，内容与 GitHub 主源保持一致同步。
+>
+> | 分支 | 内容 | GitHub 官方主源（权威记录） | Gitee 国内镜像源（推荐国内用户下载） |
+> |------|------|------------------------|-------------------|
+> | **main / master** | 源代码 | [源码 ZIP - GitHub](https://github.com/DGSAMA-Diguo/KLline/archive/refs/heads/main.zip) | [源码 ZIP](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineSource.zip) |
+> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.3.7 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.3.7/KLineMobile-v1.3.7.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+ | [KLineMobile v1.3.7 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.3.7/KLineMobile-v1.3.7.apk) <br> 【荣耀用户专版：修复荣耀 MagicOS 解析包问题】国内网络直接下载即可 |
+> | **pc** | 电脑版便携版（免安装） | [PC便携版 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/v1.2.8/KLineAgent-portable.zip) <br> Windows 10+ 解压后双击 KLineAgent.exe 即可运行 | [KLineAgent-portable v1.2.8.zip](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineAgent-portable.zip) |
+>
+> - 手机版请切换到 **mobile** 分支
+> - 电脑版请切换到 **pc** 分支
+> - 源代码：GitHub 主仓在 main 分支；Gitee 镜像在 master 分支
+>
+> ## 荣耀 / 鸿蒙手机安装提示
+>
+> 若您是荣耀 MagicOS 6 / 7 / 8 或 HarmonyOS 用户，且仍提示「解析包时出现问题」，
+> 请按以下步骤处理（v1.3.7 已内置 4 项专项兼容修复，99% 机型可直接安装）：
+>
+> 1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
+> 2. 下载 v1.3.7 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
+>    请使用手机自带的「浏览器」APP 打开本 README 再点击下载
+> 3. 安装时如荣耀弹出「纯净模式已保护您的手机」：
+>    → 设置 → 安全 → 更多安全设置 → 关闭「纯净模式」/ 选择「仍要安装」
+> 4. 以上 3 步全部做完仍失败，请重启手机再试一次（部分荣耀机型 PackageManager
+>    有 APK 哈希缓存，重启后才会刷新）。
+>
+> ## 手机版更新说明
+>
+> 手机版自 **v1.3.7+** 起启用「8 通道自动切换」更新机制，并内置荣耀专项兼容修复：
+>
+> | 序号 | 通道类型 | 归属 | 说明 |
+> |------|----------|------|------|
+> | 1~2 | Gitee 官方 CDN | 国内镜像 | master / mobile 双分支 |
+> | 3 | GitHub raw 原生 | 主源 | `raw.githubusercontent.com` |
+> | 4~7 | ghproxy 公共加速 | 主源镜像兜底 | github.moeyy.xyz / mirror.ghproxy.com / gh.api.99988866.xyz / gh-proxy.com，任意一个可用即可完成下载 |
+>
+> 每通道最多重试 3 次（等待 1s → 2s → 3s，避开 CDN 限流窗口）。
+> 正常情况下，下载任意分片会在 8 条通道里自动挑出最快可用的一个，对用户透明。
+>
+> **第一次升级提示**：
+> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.3.7 APK（签名已统一）；
+> 安装本版后，后续所有升级会**在应用内自动完成**，无需再手动下载。
+
+输入一只 A 股代码后，程序会展示最近约 5 年日 K，时间跨度接近五年。
+用户可以先在时间轴上选择并放大日期范围，再在主图上拖拽选择 15 至 400 根
 历史 K 线，从沪深京 A 股中寻找截至最新交易日、相同根数且所选 K 线、
 成交量和 MACD 综合形态最相似的 10 只股票。
 双击任意结果，可以在独立窗口中查看该股票最近 150 个交易日的同格式图表，
@@ -45,16 +92,16 @@ python gui.py
 
 操作步骤：
 
-1. 输入六位 A 股代码，点击“加载 K 线”，查看近三年的历史走势。
-2. 点击“更新行情”可立即获取实时全市场行情；程序每五分钟也会自动更新。
+1. 输入六位 A 股代码，点击"加载 K 线"，查看近三年的历史走势。
+2. 点击"更新行情"可立即获取实时全市场行情；程序每五分钟也会自动更新。
 3. 在图表底部时间轴上拖拽选择日期范围，主图会同步放大该范围；也可以使用
-   “放大图表”和“缩小图表”按钮继续调整。
+   "放大图表"和"缩小图表"按钮继续调整。
 4. 查看日 K、MA5/10/20/30/60/120、成交量和 MACD，在主图上按住
-   鼠标左键拖拽，选择 15 至 60 根连续 K 线。
-5. 勾选 K 线、成交量和 MACD 中至少一项，再点击“寻找最新相似走势”。
+   鼠标左键拖拽，选择 115 至 400 根连续 K 线。
+5. 勾选 K 线、成交量和 MACD 中至少一项，再点击"寻找最新相似走势"。
 6. 结果表会同时显示全市场综合相似度最高的 10 只股票及各项分数，无需滚动翻页。
 7. 双击结果表中的股票，打开其近 150 日 K 线、均线、成交量和 MACD 图表，
-   在弹窗时间轴上拖拽选择需要放大的日期范围。
+   在弹窗时间轴上拖拽选择日期范围进行缩放。
 
 命令行界面保留原来的最新 20 根日 K 快速查询。直接输入代码：
 
