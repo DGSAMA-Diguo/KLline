@@ -10,7 +10,7 @@
 > | 分支 | 内容 | GitHub 官方主源（权威记录） | Gitee 国内镜像源（推荐国内用户下载） |
 > |------|------|------------------------|-------------------|
 > | **main / master** | 源代码 | [源码 ZIP - GitHub](https://github.com/DGSAMA-Diguo/KLline/archive/refs/heads/main.zip) | [源码 ZIP](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineSource.zip) |
-> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.3.7 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.3.7/KLineMobile-v1.3.7.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+ | [KLineMobile v1.3.7 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.3.7/KLineMobile-v1.3.7.apk) <br> 【荣耀用户专版：修复荣耀 MagicOS 解析包问题】国内网络直接下载即可 |
+> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.3.8 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.3.8/KLineMobile-v1.3.8.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+ | [KLineMobile v1.3.8 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.3.8/KLineMobile-v1.3.8.apk) <br> 【新增自动监控预警功能测试版】国内网络直接下载即可 |
 > | **pc** | 电脑版便携版（免安装） | [PC便携版 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/v1.2.8/KLineAgent-portable.zip) <br> Windows 10+ 解压后双击 KLineAgent.exe 即可运行 | [KLineAgent-portable v1.2.8.zip](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineAgent-portable.zip) |
 >
 > - 手机版请切换到 **mobile** 分支
@@ -20,10 +20,10 @@
 > ## 荣耀 / 鸿蒙手机安装提示
 >
 > 若您是荣耀 MagicOS 6 / 7 / 8 或 HarmonyOS 用户，且仍提示「解析包时出现问题」，
-> 请按以下步骤处理（v1.3.7 已内置 4 项专项兼容修复，99% 机型可直接安装）：
+> 请按以下步骤处理（v1.3.8 已内置荣耀专项兼容修复，99% 机型可直接安装）：
 >
 > 1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
-> 2. 下载 v1.3.7 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
+> 2. 下载 v1.3.8 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
 >    请使用手机自带的「浏览器」APP 打开本 README 再点击下载
 > 3. 安装时如荣耀弹出「纯净模式已保护您的手机」：
 >    → 设置 → 安全 → 更多安全设置 → 关闭「纯净模式」/ 选择「仍要安装」
@@ -32,7 +32,15 @@
 >
 > ## 手机版更新说明
 >
-> 手机版自 **v1.3.7+** 起启用「8 通道自动切换」更新机制，并内置荣耀专项兼容修复：
+> 手机版自 **v1.3.7+** 起启用「8 通道自动切换」更新机制，并内置荣耀专项兼容修复；
+> **v1.3.8** 新增「自动监控预警」功能（测试版）：
+>
+> - 入口：首页顶栏「预警」按钮，进入后可在软件内独立的预警面板管理规则与查看记录
+> - 规则：成交量异动（量比阈值） + 形态相似度预警（独家：V 型底 / 倒 V 型顶 / 突破 / 跌破）
+>   + 价格上下限 + 涨跌幅，可多选组合
+> - 通知方式：在软件内独立的「预警记录」页面展示，不调用系统通知通道
+> - 仅在开市时间启用（周末 / 节假日 / 午休 / 夜间自动暂停）
+> - 触发冷却避免预警风暴；规则与最近 100 条记录保存在 localStorage
 >
 > | 序号 | 通道类型 | 归属 | 说明 |
 > |------|----------|------|------|
@@ -44,7 +52,7 @@
 > 正常情况下，下载任意分片会在 8 条通道里自动挑出最快可用的一个，对用户透明。
 >
 > **第一次升级提示**：
-> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.3.7 APK（签名已统一）；
+> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.3.8 APK（签名已统一）；
 > 安装本版后，后续所有升级会**在应用内自动完成**，无需再手动下载。
 
 输入一只 A 股代码后，程序会展示最近约 5 年日 K，时间跨度接近五年。
