@@ -1,14 +1,14 @@
 {
-  "version_code": 22,
-  "version_name": "1.3.9",
-  "sha256": "f1d43b5363248773d5226c5918830abae661fd932c0edaab1d9f7667a5d71db3",
-  "size": 43081728,
+  "version_code": 23,
+  "version_name": "1.4.0",
+  "sha256": "0d2cb0819b068426c4191b98e7e4ae78a15e360f89eeb3e4ce714682db1bb4e3",
+  "size": 43085824,
   "notes": "多镜像更新通道：Gitee master/mobile → GitHub raw → 4个ghproxy，每通道重试3次。",
   "parts": [
     {
       "id": 1,
       "size": 8388608,
-      "sha256": "c801bcfdeb0e43504e5700f65825e9bc90b04344b7c9709c03018be9aa099248",
+      "sha256": "fd5e29293abfb8d9032d28733f4ce2b771a7f80dbc4b736b4eb72d783ae5bf98",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part001"
     },
     {
@@ -32,13 +32,13 @@
     {
       "id": 5,
       "size": 8388608,
-      "sha256": "db7b7cd7925978f3f8643b98aee75a15abe36b81eb359f041b0b19f5af77ffb3",
+      "sha256": "77d7546b060ba7a75a86c3f8d21095fd6c2dfd13e743e6ed164129be6f96ea16",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part005"
     },
     {
       "id": 6,
-      "size": 1138688,
-      "sha256": "b090c17a50b29f4d6067613dd385f7eae5a709d8872c0de6c3eac54cb7e6ad72",
+      "size": 1142784,
+      "sha256": "efa585b43fa383087bb9abcb9b83c0ced301b8ecd2f8c92322c509156e5265ad",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part006"
     }
   ]
