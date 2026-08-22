@@ -10,7 +10,7 @@
 > | 分支 | 内容 | GitHub 官方主源（权威记录） | Gitee 国内镜像源（推荐国内用户下载） |
 > |------|------|------------------------|-------------------|
 > | **main / master** | 源代码 | [源码 ZIP - GitHub](https://github.com/DGSAMA-Diguo/KLline/archive/refs/heads/main.zip) | [源码 ZIP](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineSource.zip) |
-> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.4.0 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.4.0/KLineMobile-v1.4.0.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+ | [KLineMobile v1.4.0 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.4.0/KLineMobile-v1.4.0.apk) <br> 【新增分片并发下载 + gzip 压缩 + 预警功能测试版】国内网络直接下载即可 |
+> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.4.1 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.4.1/KLineMobile-v1.4.1.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+ | [KLineMobile v1.4.1 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.4.1/KLineMobile-v1.4.1.apk) <br> 【新增全市场扫描预警 + 分片并发下载 + gzip 压缩测试版】国内网络直接下载即可 |
 > | **pc** | 电脑版便携版（免安装） | [PC便携版 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/v1.2.8/KLineAgent-portable.zip) <br> Windows 10+ 解压后双击 KLineAgent.exe 即可运行 | [KLineAgent-portable v1.2.8.zip](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineAgent-portable.zip) |
 >
 > - 手机版请切换到 **mobile** 分支
@@ -20,10 +20,10 @@
 > ## 荣耀 / 鸿蒙手机安装提示
 >
 > 若您是荣耀 MagicOS 6 / 7 / 8 或 HarmonyOS 用户，且仍提示「解析包时出现问题」，
-> 请按以下步骤处理（v1.4.0 已内置荣耀专项兼容修复，99% 机型可直接安装）：
+> 请按以下步骤处理（v1.4.1 已内置荣耀专项兼容修复，99% 机型可直接安装）：
 >
 > 1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
-> 2. 下载 v1.4.0 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
+> 2. 下载 v1.4.1 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
 >    请使用手机自带的「浏览器」APP 打开本 README 再点击下载
 > 3. 安装时如荣耀弹出「纯净模式已保护您的手机」：
 >    → 设置 → 安全 → 更多安全设置 → 关闭「纯净模式」/ 选择「仍要安装」
@@ -35,18 +35,20 @@
 > 手机版自 **v1.3.7+** 起启用「8 通道自动切换」更新机制，并内置荣耀专项兼容修复；
 > **v1.3.8** 新增「自动监控预警」功能（测试版）；
 > **v1.3.9** 对内置行情数据做 gzip 压缩优化（APK 从 48MB 缩到 41MB，分片从 7 个减到 6 个）；
-> **v1.4.0** 把应用内更新从「分片串行下载」改造为「3 线程并发下载」（下载耗时减半）：
+> **v1.4.0** 把应用内更新从「分片串行下载」改造为「3 线程并发下载」（下载耗时减半）；
+> **v1.4.1** 把预警功能从「单股监控」改造为「全市场扫描」：
 >
 > - 6 个分片用 3 个线程并行下载，每分片独立临时文件，全部完成后按序合并到 APK
 > - 失败重试时进度自动回退扣除，避免进度 > 100%；线程被取消时立即抛异常退出
 > - 行情数据用 gzip 压缩 + base64 编码嵌入 HTML，浏览器端用 pako 解压库启动时同步解压
 > - 兼容鸿蒙 / 荣耀 / Android 8.0+ 所有机型（pako 是纯 JS 实现，不依赖原生 API）
 > - payload version 升级为 2（兼容老版本 version=1 的未压缩格式）
-> - 入口：首页顶栏「预警」按钮，进入后可在软件内独立的预警面板管理规则与查看记录
-> - 规则：成交量异动（量比阈值） + 形态相似度预警（独家：V 型底 / 倒 V 型顶 / 突破 / 跌破）
->   + 价格上下限 + 涨跌幅，可多选组合
-> - 通知方式：在软件内独立的「预警记录」页面展示，不调用系统通知通道
-> - 仅在开市时间启用（周末 / 节假日 / 午休 / 夜间自动暂停）
+> - 入口：首页顶栏「预警」按钮，进入后可在软件内独立的预警面板管理扫描设置与查看结果
+> - 规则改为全市场统一：涨跌幅异动 + 量比异动 + 形态相似度（V 型底 / 倒 V 型顶 / 突破 / 跌破）
+> - 每 3 分钟扫描一次全市场（开市时段 9:30-11:30 / 13:00-15:00），非开市时段自动暂停
+> - 扫描结果按规则分组展示（涨跌幅组 / 量比组 / 形态组），每组最多 50 条
+> - 形态扫描分批异步执行（每批 100 只，批间让出 50ms），避免阻塞 UI
+> - 通知方式：在软件内独立的「扫描结果」页面展示，不调用系统通知通道
 > - 触发冷却避免预警风暴；规则与最近 100 条记录保存在 localStorage
 >
 > | 序号 | 通道类型 | 归属 | 说明 |
@@ -59,7 +61,7 @@
 > 正常情况下，下载任意分片会在 8 条通道里自动挑出最快可用的一个，对用户透明。
 >
 > **第一次升级提示**：
-> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.4.0 APK（签名已统一）；
+> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.4.1 APK（签名已统一）；
 > 安装本版后，后续所有升级会**在应用内自动完成**，无需再手动下载。
 
 输入一只 A 股代码后，程序会展示最近约 5 年日 K，时间跨度接近五年。
