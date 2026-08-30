@@ -10,7 +10,7 @@
 > | 分支 | 内容 | GitHub 官方主源（权威记录） | Gitee 国内镜像源（推荐国内用户下载） |
 > |------|------|------------------------|-------------------|
 > | **main / master** | 源代码 | [源码 ZIP - GitHub](https://github.com/DGSAMA-Diguo/KLline/archive/refs/heads/main.zip) | [源码 ZIP](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineSource.zip) |
-> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.5.0 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.5.0/KLineMobile-v1.5.0.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+/iOS | [KLineMobile v1.5.0 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.5.0/KLineMobile-v1.5.0.apk) <br> 【底部四页菜单 + 实时行情三端点回退 + 平板适配】国内网络直接下载即可 |
+> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.5.1 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.5.1/KLineMobile-v1.5.1.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+/iOS | [KLineMobile v1.5.1 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.5.1/KLineMobile-v1.5.1.apk) <br> 【底部四页菜单 + 实时行情三端点回退 + 平板适配】国内网络直接下载即可 |
 > | **pc** | 电脑版便携版（免安装） | [PC便携版 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/v1.2.8/KLineAgent-portable.zip) <br> Windows 10+ 解压后双击 KLineAgent.exe 即可运行 | [KLineAgent-portable v1.2.8.zip](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineAgent-portable.zip) |
 >
 > - 手机版请切换到 **mobile** 分支
@@ -20,10 +20,10 @@
 > ## 荣耀 / 鸿蒙手机安装提示
 >
 > 若您是荣耀 MagicOS 6 / 7 / 8 或 HarmonyOS 用户，且仍提示「解析包时出现问题」，
-> 请按以下步骤处理（v1.5.0 已内置荣耀专项兼容修复，99% 机型可直接安装）：
+> 请按以下步骤处理（v1.5.1 已内置荣耀专项兼容修复，99% 机型可直接安装）：
 
-> 1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
-> 2. 下载 v1.5.0 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
+1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
+2. 下载 v1.5.1 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
 >    请使用手机自带的「浏览器」APP 打开本 README 再点击下载
 > 3. 安装时如荣耀弹出「纯净模式已保护您的手机」：
 >    → 设置 → 安全 → 更多安全设置 → 关闭「纯净模式」/ 选择「仍要安装」
@@ -64,7 +64,14 @@
 >   `_` 时间戳 + Cache-Control/Pragma 防缓存 + 无 fetch/AbortController 走 XHR 兜底 + 周末节假日覆盖度阈值放宽
 > - **v1.5.0 新增**：平板比例适配（≤720/721~1100/1101~1440/1441+ 四档断点 + 横屏矮屏紧凑），
 >   兼容鸿蒙/Honor/安卓 8.0+/iOS（100dvh + visualViewport + env(safe-area-inset-*)）
->
+> - **v1.5.1 新增**：修复「行情显示和实际不一样」两项根因 Bug — f124 日期按位数精确判断
+>   （YYYYMMDDHHMMSS / Unix 秒双兼容）+ f5 成交量手→股 ×100 换算，实时 K 线柱和放量预警恢复正常；
+>   电脑端 live_market.py 同步修复
+> - **v1.5.1 新增**：删除独立「放大选区」按钮并入主图交互 — 在主图上框选 15～400 根 K 线后
+>   松手即自动放大选区，双击主图可快速恢复全图
+> - **v1.5.1 新增**：底部菜单栏整体缩小约 25%（容器/菜单项/图标/标签/页面底部预留高度同步缩小），
+>   为 K 线主图和结果列表留出更多可视区域
+
 > | 序号 | 通道类型 | 归属 | 说明 |
 > |------|----------|------|------|
 > | 1~2 | Gitee 官方 CDN | 国内镜像 | master / mobile 双分支 |
@@ -75,7 +82,7 @@
 > 正常情况下，下载任意分片会在 8 条通道里自动挑出最快可用的一个，对用户透明。
 >
 > **第一次升级提示**：
-> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.5.0 APK（签名已统一）；
+> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.5.1 APK（签名已统一）；
 > 安装本版后，后续所有升级会**在应用内自动完成**，无需再手动下载。
 
 输入一只 A 股代码后，程序会展示最近约 5 年日 K，时间跨度接近五年。
