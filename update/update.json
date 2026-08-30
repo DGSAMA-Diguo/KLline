@@ -1,44 +1,44 @@
 {
-  "version_code": 25,
-  "version_name": "1.4.2",
-  "sha256": "18bbcc565e1a2ccf903f170ba3a8ea45c0b9fe99fa13b59b66133d3d9a5bc1f5",
+  "version_code": 26,
+  "version_name": "1.4.3",
+  "sha256": "be87c5f2f7b9c43dd67fcfac25b4deb1c73b11dc72087493b888a824bfb90dca",
   "size": 43085824,
   "notes": "多镜像更新通道：Gitee master/mobile → GitHub raw → 4个ghproxy，每通道重试3次。",
   "parts": [
     {
       "id": 1,
       "size": 8388608,
-      "sha256": "14e488454a420c39f5f1283d4e277f9cdf7b82425ee1c113f833f9f5cd3ad2b0",
+      "sha256": "fb6d0539980faf37a5bc0f1493b10319cfa510359c780669797443fd9568587d",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part001"
     },
     {
       "id": 2,
       "size": 8388608,
-      "sha256": "7172c0da5c4b0fb0627750b671aeef27ec05352a4b6a3ec7f0149acf66bf9d86",
+      "sha256": "fa52be6a5255229cdcf01dd5b22acbbf6d4fa3f3ed6c0c4757005ea370d6fed2",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part002"
     },
     {
       "id": 3,
       "size": 8388608,
-      "sha256": "eb7ee5f4a70512b7e918f5e9ae477c1e169e92ccd2cc9123e9a7da964695e3e7",
+      "sha256": "287375e7bd7264d14a7292fb09784a5102722430686eb550d952889a4d7039b6",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part003"
     },
     {
       "id": 4,
       "size": 8388608,
-      "sha256": "d255f6a4c8c009c892c29e0b1b77416bd3ffd56a57d2911b8d779bf16c1a0745",
+      "sha256": "09992b3180452a4aa6b8f03fe40bf2c7add516095c6e4a6fdecc786da89e1cd1",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part004"
     },
     {
       "id": 5,
       "size": 8388608,
-      "sha256": "187efe5817a126d9d8b7b3e7a2934dea1e68f4380e99b2763f2061705f7f3d12",
+      "sha256": "e1ece7853f5a87ede270a27e90c1a589db08439c5d804dba0a477f208d7ddd78",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part005"
     },
     {
       "id": 6,
       "size": 1142784,
-      "sha256": "ffc7d938ec31e573afd87842a9469f9617e076a186fdd7c915468c3ced6503b4",
+      "sha256": "67c06d4199b4d3ed7d279a4f72f77e87911c6115404bf710992def81a7616d64",
       "url": "https://raw.githubusercontent.com/DGSAMA-Diguo/KLline/main/update/KLineMobile.apk.part006"
     }
   ]
