@@ -10,7 +10,7 @@
 > | 分支 | 内容 | GitHub 官方主源（权威记录） | Gitee 国内镜像源（推荐国内用户下载） |
 > |------|------|------------------------|-------------------|
 > | **main / master** | 源代码 | [源码 ZIP - GitHub](https://github.com/DGSAMA-Diguo/KLline/archive/refs/heads/main.zip) | [源码 ZIP](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineSource.zip) |
-> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.9.1 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.9.1/KLineMobile-v1.9.1.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+/iOS | [KLineMobile v1.9.1 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.9.1/KLineMobile-v1.9.1.apk) <br> 【底部四页菜单 + 实时行情三端点回退 + 平板适配】国内网络直接下载即可 |
+> | **mobile** | 手机版 APK（含 2 年缓存行情） | [KLineMobile v1.9.2 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/1.9.2/KLineMobile-v1.9.2.apk) <br> 兼容鸿蒙/Honor/安卓 8.0+/iOS | [KLineMobile v1.9.2 - Gitee 国内镜像](https://gitee.com/dgsproject/kline/releases/download/1.9.2/KLineMobile-v1.9.2.apk) <br> 【底部四页菜单 + 实时行情三端点回退 + 平板适配】国内网络直接下载即可 |
 > | **pc** | 电脑版便携版（免安装） | [PC便携版 - GitHub](https://github.com/DGSAMA-Diguo/KLline/releases/download/v1.2.8/KLineAgent-portable.zip) <br> Windows 10+ 解压后双击 KLineAgent.exe 即可运行 | [KLineAgent-portable v1.2.8.zip](https://gitee.com/dgsproject/kline/releases/download/v1.2.8/KLineAgent-portable.zip) |
 >
 > - 手机版请切换到 **mobile** 分支
@@ -20,10 +20,10 @@
 > ## 荣耀 / 鸿蒙手机安装提示
 >
 > 若您是荣耀 MagicOS 6 / 7 / 8 或 HarmonyOS 用户，且仍提示「解析包时出现问题」，
-> 请按以下步骤处理（v1.9.1 已内置荣耀专项兼容修复，99% 机型可直接安装）：
+> 请按以下步骤处理（v1.9.2 已内置荣耀专项兼容修复，99% 机型可直接安装）：
 
 1. 卸载手机上已安装的 v1.2.x 旧版（签名变更，必须先卸旧版）
-2. 下载 v1.9.1 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
+2. 下载 v1.9.2 APK 时**不要用微信/QQ 内置浏览器打开**（它们自带二次校验会误判），
 >    请使用手机自带的「浏览器」APP 打开本 README 再点击下载
 > 3. 安装时如荣耀弹出「纯净模式已保护您的手机」：
 >    → 设置 → 安全 → 更多安全设置 → 关闭「纯净模式」/ 选择「仍要安装」
@@ -82,7 +82,7 @@
 > 正常情况下，下载任意分片会在 8 条通道里自动挑出最快可用的一个，对用户透明。
 >
 > **第一次升级提示**：
-> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.9.1 APK（签名已统一）；
+> v1.2.x 老版本用户请先卸载旧 APP，再安装本 v1.9.2 APK（签名已统一）；
 > 安装本版后，后续所有升级会**在应用内自动完成**，无需再手动下载。
 
 输入一只 A 股代码后，程序会展示最近约 5 年日 K，时间跨度接近五年。
